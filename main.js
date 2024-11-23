@@ -19,6 +19,8 @@ let csv = loadFile("metadata.csv");
 
 let hash_keys = {};
 
+let stats = {};
+
 
 String.prototype.hashCode = function() {
   var hash = 0,
@@ -294,6 +296,8 @@ for (let line of csv.split("\n")) {
 
   elm.className = "body_part";
   img.setAttribute("src", "img/" + attb[0] + ".png");
+  img.setAttribute("loading","lazy");
+  img.setAttribute("alt",attb[0]);
   elm.setAttribute("src", "img/" + attb[0] + ".png");
 
   elm.appendChild(img);
