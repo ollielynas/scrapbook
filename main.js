@@ -67,7 +67,7 @@ function convert_to_char(elem) {
   let scale = elem.getAttribute("scale") || 10;
   let scale_str = convertBase(String(Math.abs(scale)), 10 , MAX_BASE);
   
-  let z_index_value = elem.getAttribute("scale") || 0;
+  let z_index_value = elem.getAttribute("z_index") || 0;
   negatives[1] = (z_index_value < 0);
   let z_index_str = convertBase(String(Math.abs(z_index_value)), 10 , MAX_BASE);
   
