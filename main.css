@@ -1,0 +1,75 @@
+
+
+.item_list {
+    position: absolute;
+    display: flex;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 15em;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    gap: 0.5em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.item_attb {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 10em;
+    gap: 0.5em;
+    overflow-y: scroll;
+}
+
+.body:not(:has(.part_img[target="true"])) .item_attb {
+    display: none;
+}
+
+.item_list .body_part p {
+    padding: 0;
+    margin: 0;
+}
+.item_list .body_part {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    width: 45%;
+}
+
+.item_list img {
+    width: 80%;
+}
+
+.canvas {
+    position: absolute;
+    left: 50vw;
+    top: 50vh;
+    border: 1px black solid;
+    height: 40em;
+    width: 40em;
+    transform: translate(-50%, -50%);
+}
+
+.part_img {
+    position: absolute;
+    width: 8em;
+    transition: transform 0.03s;
+    transform-style: preserve-3d;
+}
+.part_img[target="true"] {
+    outline: 1.5px solid blue;
+}
+
+.background {
+    margin: 1000em;
+    background-color: burlywood;
+    position: absolute;
+    left: 50vw;
+    right: 50vh;
+    height: 0;
+    width: 0;
+}
