@@ -118,7 +118,7 @@ function load_from_url() {
     let name = hash_keys[name_str] || name_str;
 
     let img = document.createElement("img");
-    img.src = "/img/"+name+".png";
+    img.src = "img/"+name+".png";
     img.style.left = parseInt(convertBase(x_str, MAX_BASE, 10)/1000) * negatives[2] + "%";
     img.style.top = parseInt(convertBase(y_str, MAX_BASE, 10)/1000) * negatives[3] + "%";
 
