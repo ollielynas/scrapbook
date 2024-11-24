@@ -15,7 +15,7 @@ function loadFile(filePath) {
   return result;
 }
 
-let csv = loadFile("metadata.csv");
+let csv = loadFile("bruh.csv");
 
 let hash_keys = {};
 
@@ -185,6 +185,13 @@ del_button.onclick = () => {
     }
   }
 };
+
+window.onkeydown = (e) => {
+  console.log(e.keyCode);
+  if (e.keyCode === 8 || e.keyCode === 46) {
+    del_button.click();
+  }
+}
 
 function update_item_val(e) {
   let focus = null;
