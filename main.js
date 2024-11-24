@@ -56,7 +56,7 @@ function convertBase(value, from_base, to_base) {
 
 
 function convert_to_char(elem) {
-  let name = elem.getAttribute("name") || "no item selected";
+  let name = elem.getAttribute("name") || "error";
 
   let name_str = convertBase(String(name.hashCode()), 10, MAX_BASE);
 
@@ -119,16 +119,21 @@ function load_from_url() {
     console.log(negatives);
     let name = hash_keys[name_str] || name_str;
 
+    let container = document.createElement("div");
+
     let img = document.createElement("img");
     img.src = "img/"+name+".png";
-    img.style.left = parseInt(convertBase(x_str, MAX_BASE, 10)/1000) * negatives[2] + "%";
-    img.style.top = parseInt(convertBase(y_str, MAX_BASE, 10)/1000) * negatives[3] + "%";
+    img.className = "part_img";
+    container.appendChild(img);
+
+    container.style.left = parseInt(convertBase(x_str, MAX_BASE, 10)/1000) * negatives[2] + "%";
+    container.style.top = parseInt(convertBase(y_str, MAX_BASE, 10)/1000) * negatives[3] + "%";
 
    
-    img.setAttribute("z_index", parseInt(convertBase(z_index_str,MAX_BASE,10))*negatives[1] + "");
-    img.setAttribute("name", name + "");
-    img.setAttribute("scale", parseInt(convertBase(scale_str,MAX_BASE,10)) + "");
-    img.setAttribute("angle", parseInt(convertBase(angle_str,MAX_BASE,10)) * negatives[0] + "");
+    container.setAttribute("z_index", parseInt(convertBase(z_index_str,MAX_BASE,10))*negatives[1] + "");
+    container.setAttribute("name", name + "");
+    container.setAttribute("scale", parseInt(convertBase(scale_str,MAX_BASE,10)) + "");
+    container.setAttribute("angle", parseInt(convertBase(angle_str,MAX_BASE,10)) * negatives[0] + "");
 
     let hv_str = convertBase(flip_h_v_str, MAX_BASE, 2);
     if (hv_str == "0") {
@@ -137,22 +142,20 @@ function load_from_url() {
 
     console.log(hv_str);
 
-    img.setAttribute("flip_h", (hv_str[0]=="1"));
-    img.setAttribute("flip_v", (hv_str[1]=="1"));
+    container.setAttribute("flip_h", (hv_str[0]=="1"));
+    container.setAttribute("flip_v", (hv_str[1]=="1"));
 
-    img.setAttribute("target", true);
-    img.className = "part_img";
+    container.setAttribute("target", true);
+    container.className = "part_container";
 
-    dragElement(img);
+    dragElement(container);
     
-    canvas.appendChild(img);
+    canvas.appendChild(container);
     
     update_item_attb_menu();
     update_item_val();
     
-    img.setAttribute("target", false);
-
-
+    container.setAttribute("target", false);
   }
 
 }
@@ -178,7 +181,7 @@ if (!csv.startsWith("name")) {
 }
 
 del_button.onclick = () => {
-  for (let elm of document.getElementsByClassName("part_img")) {
+  for (let elm of document.getElementsByClassName("part_container")) {
     if (elm.getAttribute("target") == "true") {
       elm.remove();
       return;
@@ -195,7 +198,7 @@ window.onkeydown = (e) => {
 
 function update_item_val(e) {
   let focus = null;
-  for (let elm of document.getElementsByClassName("part_img")) {
+  for (let elm of document.getElementsByClassName("part_container")) {
     if (elm.getAttribute("target") == "true") {
       focus = elm;
     }
@@ -228,7 +231,7 @@ part_attb.oninput = update_item_val;
 
 function update_item_attb_menu() {
   let focus = null;
-  for (let elm of document.getElementsByClassName("part_img")) {
+  for (let elm of document.getElementsByClassName("part_container")) {
     if (elm.getAttribute("target") == "true") {
       focus = elm;
     }
@@ -255,7 +258,7 @@ function update_item_attb_menu() {
 
 function spawn_part(e) {
   e.preventDefault();
-  for (let elm of document.getElementsByClassName("part_img")) {
+  for (let elm of document.getElementsByClassName("part_container")) {
     elm.setAttribute("target", "false");
   }
   // calculate the new cursor position:
@@ -263,9 +266,13 @@ function spawn_part(e) {
 
   // set the element's new position:
 
-  let part = document.createElement("img");
-  part.className = "part_img";
-  part.setAttribute("src", this.getAttribute("src"));
+  let part = document.createElement("div");
+  part.className = "part_container";
+
+  let img = document.createElement("img");
+  img.setAttribute("src", this.getAttribute("src"));
+  part.appendChild(img);
+  img.className = "part_img";
 
   let keys = ["name", "int", "pwr", "def", "mbl", "hp", "stl"];
 
@@ -335,7 +342,7 @@ for (let line of csv.split("\n")) {
 }
 
 document.getElementById("part_canvas").onmousedown = (e) => {
-  for (let elm of document.getElementsByClassName("part_img")) {
+  for (let elm of document.getElementsByClassName("part_container")) {
     elm.setAttribute("target", "false");
   }
 };
@@ -373,7 +380,7 @@ function dragElement(elmnt) {
     pos2 = pos4 - e.clientY;
     pos3 = e.clientX;
     pos4 = e.clientY;
-    if (elmnt.className == "part_img") {
+    if (elmnt.className == "part_container") {
       elmnt.setAttribute("target", true);
       update_item_attb_menu();
     }
@@ -396,7 +403,7 @@ load_from_url();
 setInterval(()=> {
   if (window.history.replaceState) {
     let data = "";
-    for (let elem of document.getElementsByClassName("part_img")) {
+    for (let elem of document.getElementsByClassName("part_container")) {
       let d = convert_to_char(elem);
       data = data + ((data=="")? "":";") + d;
     }

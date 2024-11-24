@@ -54,14 +54,18 @@
     transform: translate(-50%, -50%);
 }
 
-.part_img {
+.part_container {
     position: absolute;
-    width: 8em;
     transition: transform 0.03s;
     transform-style: preserve-3d;
 }
-.part_img[target="true"] {
+
+.part_container[target="true"] {
     outline: 1.5px solid blue;
+}
+
+.part_img {
+    width: 8em;
 }
 
 .background {
