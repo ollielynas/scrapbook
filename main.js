@@ -498,8 +498,14 @@ function create_card(data, width, card_name) {
       continue;
     }
     let line = document.createElement("p");
-    line.innerText = names[i]+": " + this_stats[keys[i]];
+    line.innerText = names[i]+": ";
     text_container.appendChild(line);
+
+    let line2 = document.createElement("p");
+    line2.innerText = "" + this_stats[keys[i]];
+    text_container.appendChild(line2);
+
+    text_container.appendChild(document.createElement("p"));
   }
 
   card_body.appendChild(text_container);
