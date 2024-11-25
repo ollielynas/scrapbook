@@ -464,6 +464,7 @@ function create_card(data, width, card_name) {
     
     child_img.style.top = elem_clone.style.top;
     child_img.style.left = elem_clone.style.left;
+    child_img.style.zIndex = elem_clone.style.zIndex;
     child_img.style.transform = elem_clone.style.transform;
     child_img.style.WebkitTransform = elem_clone.style.WebkitTransform;
     let old_width = child_img.style.width;
