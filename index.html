@@ -6,13 +6,17 @@
     <title>scrapbook creatures</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="preload" href="metadata.csv" as="fetch" />
     <script src=
     "https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
         </script>
     
 </head>
 <body>
-    <div ></div>
+    <div class="top_bar" >
+        <div id="creature_name" contenteditable="false" onfocusout="this.setAttribute('contenteditable','false')">unnamed</div><i class="ph ph-pencil-simple" onclick="document.getElementById('creature_name').setAttribute('contenteditable','true');document.getElementById('creature_name').focus();document.execCommand('selectAll', false, null);"></i>
+    </div>
 
     <div id="left_bar">
         <div class="type_selector" id="type_selector">

@@ -21,6 +21,12 @@ let hash_keys = {};
 
 let stats = {};
 
+let creature_name = "unnamed";
+
+document.getElementById("creature_name").oninput = (e) => {
+  creature_name = e.target.innerText.replaceAll("\n", "");
+  console.log(creature_name);
+}
 
 String.prototype.hashCode = function() {
   var hash = 0,
@@ -95,10 +101,30 @@ function convert_to_char(elem) {
 }
 
 function load_from_url() {
+
   if (window.location.href.split('=').length != 2 || window.location.href.split('=')[1] == "") {
     return;
   }
-  let text = decompressUrlSafe(window.location.href.split('=')[1]);
+  let name = "unnamed";
+  let text = "";
+  let text_before = window.location.href.split('=')[1];
+  if (text_before.split(";").length > 1) {
+    name = decodeURIComponent(text_before.split(";")[0]);
+    text = decompressUrlSafe(text_before.split(";")[1]);
+    console.log(name);
+    if (text == "") {
+      return;
+    }
+  }else {
+    text = decompressUrlSafe(window.location.href.split('=')[1])
+  }
+
+  console.log(text);
+  
+  creature_name = name;
+
+  document.getElementById("creature_name").innerText = creature_name;
+
   let text_array = text.split(";");
 
 
@@ -113,10 +139,8 @@ function load_from_url() {
     let y_str = text_array[offset + 7];
     
     let temp = convertBase(neg_str,MAX_BASE,2);
-    console.log(temp);
-    console.log(("0".repeat(4-temp.length)+temp).split(""))
+
     let negatives = ("0".repeat(4-temp.length)+temp).split("").map((a) => {return (a=="1")?-1:1});
-    console.log(negatives);
     let name = hash_keys[name_str] || name_str;
 
     let container = document.createElement("div");
@@ -140,7 +164,6 @@ function load_from_url() {
       hv_str = "0,0";
     }
 
-    console.log(hv_str);
 
     container.setAttribute("flip_h", (hv_str[0]=="1"));
     container.setAttribute("flip_v", (hv_str[1]=="1"));
@@ -190,7 +213,6 @@ del_button.onclick = () => {
 };
 
 window.onkeydown = (e) => {
-  console.log(e.keyCode);
   if (e.keyCode === 8 || e.keyCode === 46) {
     del_button.click();
   }
@@ -443,7 +465,11 @@ function setUpSelectors() {
 
 setUpSelectors();
 
-load_from_url();
+try {
+  load_from_url();
+} catch(err) {
+  console.err(err);
+}
 
 setInterval(()=> {
   if (window.history.replaceState) {
@@ -453,7 +479,7 @@ setInterval(()=> {
       data = data + ((data=="")? "":";") + d;
     }
     data = compressUrlSafe(data);
-        window.history.replaceState({}, null, window.location.href.split('?')[0] + "?d="+data
+        window.history.replaceState({}, null, window.location.href.split('?')[0] + "?d="+creature_name+";"+data
   );
   }
 
