@@ -15,6 +15,18 @@
     height: 20vh;
     width: 100%;
     border: 1px solid black;
+
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: space-around;
+    align-items: center;
+}
+
+.part_type {
+    width: 2.4em;
+    height: 3em;
+    object-fit: contain;
 }
 
 .item_list {
