@@ -25,7 +25,7 @@
     overflow-y: scroll;
 }
 
-body:not(:has(.part_img[target="true"])) .item_attb {
+body:not(:has(.part_container[target="true"])) .item_attb {
     display: none;
 }
 

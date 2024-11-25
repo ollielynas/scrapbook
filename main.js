@@ -15,7 +15,7 @@ function loadFile(filePath) {
   return result;
 }
 
-let csv = loadFile("bruh.csv");
+let csv = loadFile("metadata.csv");
 
 let hash_keys = {};
 
