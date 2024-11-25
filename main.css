@@ -12,7 +12,7 @@
 
 #type_selector {
     display: flex;
-    height: 20vh;
+    height: min-content;
     width: 100%;
     border: 1px solid black;
 
@@ -27,6 +27,18 @@
     width: 2.4em;
     height: 3em;
     object-fit: contain;
+
+    cursor: pointer;
+
+    filter: grayscale(100%) opacity(20%);
+}
+
+.part_type:hover {
+    filter: grayscale(100%) opacity(50%);
+}
+
+.part_type[selected="true"] {
+    filter: grayscale(0%) opacity(100%);
 }
 
 .item_list {
