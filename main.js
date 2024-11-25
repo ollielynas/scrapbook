@@ -160,7 +160,10 @@ function load_from_url() {
 
     let hv_str = convertBase(flip_h_v_str, MAX_BASE, 2);
     if (hv_str == "0") {
-      hv_str = "0,0";
+      hv_str = "00";
+    }
+    if (hv_str == "1") {
+      hv_str = "01";
     }
 
 
