@@ -424,7 +424,13 @@ function dragElement(elmnt) {
     document.onmousemove = null;
   }
 }
-load_from_url();
+
+try {
+  load_from_url();
+}
+catch(err) {
+  console.err(err);
+}
 
 setInterval(()=> {
   if (window.history.replaceState) {
