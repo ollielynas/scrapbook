@@ -111,9 +111,15 @@ function load_from_url() {
   if (text_before.split(";").length > 1) {
     name = decodeURIComponent(text_before.split(";")[0]);
     text = decompressUrlSafe(text_before.split(";")[1]);
+    console.log(name);
+    if (text == "") {
+      return;
+    }
   }else {
     text = decompressUrlSafe(window.location.href.split('=')[1])
   }
+
+  console.log(text);
   
   creature_name = name;
 
