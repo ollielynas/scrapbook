@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 .top_bar {
     position: static;
     left: 0;
@@ -11,6 +11,23 @@
     justify-content: center;
     gap: 0.2em;
 }
+html {
+    font-family: "Special Elite", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    background-position: 3em 2em;
+    --s: 100px; /* control the size*/
+    --c1: #3366661b;
+    --c2: #ffffff5b;
+    
+    --_g: #0000 90deg,var(--c1) 0;
+    background: 
+      conic-gradient(from 90deg at 2px 2px,var(--_g)),
+      conic-gradient(from 90deg at 1px 1px,var(--_g)),
+      var(--c2);
+    background-position-y: bottom;
+    background-size: var(--s) var(--s), calc(var(--s)/5) calc(var(--s)/5);
+  }
 
 .top_bar #creature_name {
     height: 1em;
@@ -102,6 +119,10 @@
     width: 11em;
     gap: 0.5em;
     overflow-y: scroll;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    padding: 0.8em;
 }
 
 body:not(:has(.part_container[target="true"])) .item_attb {
@@ -120,6 +141,7 @@ body:not(:has(.part_container[target="true"])) .item_attb {
   font-weight: 400;
   font-style: normal;
   padding: 0.2em;
+  height: min-content;
   background-color: rgb(255, 251, 238);
 }
 
@@ -132,9 +154,11 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     position: absolute;
     left: calc( 50vw - 20em);
     top: calc( 50vh - 20em);
-    border: 1px black solid;
     height: 40em;
     width: 40em;
+    background-color: white;
+    filter: drop-shadow(0.0 0.0em 0.2em #000000);
+
 }
 
 .part_container {
@@ -160,7 +184,8 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     font-family: "Special Elite", system-ui;
     font-weight: 400;
     font-style: normal;
-    overflow: hidden;
+    overflow: -moz-hidden-unscrollable;
+    overflow-clip-margin: 1.4rem;
     position: relative;
     /* outline: 0.07em solid black; */
     background-color: rgb(254, 255, 241);
@@ -186,7 +211,6 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     /* transform: scale(0.8); */
     scale: 0.8;
     filter: drop-shadow(0.0 0.07em 0.08em #000000);
-
 }
 
 .card_sub_img {
