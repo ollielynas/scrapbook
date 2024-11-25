@@ -514,7 +514,6 @@ function create_card(data, width, card_name) {
   let title = document.createElement("p");
   title.innerText = card_name;
   title.className = "creature_title";
-  console.log(max_left, max_right);
 
 
   if (max_bottom < max_top) {
