@@ -15,6 +15,16 @@
 .top_bar #creature_name {
     height: 1em;
     font-size: 3em;
+    outline: white;
+}
+
+.top_bar i {
+    display: none;
+    font-size: 3em;
+}
+.top_bar:hover i {
+    display: block;
+    font-size: 3em;
 }
 
 #creature_name[contenteditable="true"] + i {
@@ -88,7 +98,6 @@
 .item_attb {
     position: absolute;
     top: 0;
-    bottom: 0;
     right: 0;
     width: 11em;
     gap: 0.5em;
@@ -240,7 +249,7 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     margin: 0.1em;
     position: absolute;
     z-index: 1;
-    font-size: 1.3em !important;
+    /* font-size: 1.3em !important; */
     padding-bottom: 0.0em !important;
     margin: 0.1em !important;
     padding-top: 0.2em;

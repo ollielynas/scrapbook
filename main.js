@@ -516,6 +516,15 @@ function create_card(data, width, card_name) {
   text_container.className = "text_container";
   let title = document.createElement("p");
   title.innerText = card_name;
+  console.log(title.innerText.length);
+  title.style.fontSize = "1.3em";
+  if (title.innerText.length > 10) {
+    title.style.fontSize = "0.8em";
+  }
+  if (title.innerText.length > 20) {
+    title.style.fontSize = "0.5em";
+  }
+  
   title.className = "creature_title";
 
 
