@@ -58,6 +58,8 @@
     position: absolute;
     transition: transform 0.03s;
     transform-style: preserve-3d;
+    transform-origin: top left;
+    transform: translate(-50%, -50%);
 }
 
 .part_container[target="true"] {

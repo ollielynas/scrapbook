@@ -209,20 +209,22 @@ function update_item_val(e) {
   focus.setAttribute("z_index", (z_index.value || 0) + "");
   focus.setAttribute("flip_h", (flip_h.checked || false) + "");
   focus.setAttribute("flip_v", (flip_v.checked || false) + "");
+  
+  const child = focus.querySelector(".part_img");
 
   let transform =
-    "scale(" +
-    String(scale_slider.value / 10) +
-    ") rotate(" +
+    "rotate(" +
     String(angle_slider.value) +
     "deg) rotateX(" +
     (flip_v.checked ? 180 : 0) +
     "deg)" +
     "rotateY(" +
     (flip_h.checked ? 180 : 0) +
-    "deg)";
+    "deg) translate(-50%, -50%)";
   focus.style.transform = transform;
   focus.style.WebkitTransform = transform;
+
+  child.style.width = 8 * scale_slider.value / 10 + "em";
 
   focus.style.zIndex = z_index.value + "";
 }
@@ -288,12 +290,14 @@ function spawn_part(e) {
   part.style.left =
     e.pageX -
     canvas.getBoundingClientRect().left -
-    (e.pageX - this.getBoundingClientRect().left) +
+    (e.pageX - this.getBoundingClientRect().left) 
+    + part.clientWidth / 2 +
     "px";
-  part.style.top =
+    part.style.top =
     e.pageY -
     canvas.getBoundingClientRect().top -
-    (e.pageY - this.getBoundingClientRect().top) +
+    (e.pageY - this.getBoundingClientRect().top)
+    + part.clientHeight / 2 +
     "px";
 }
 
