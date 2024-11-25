@@ -1,12 +1,26 @@
-
-
-.item_list {
+#left_bar {
     position: absolute;
-    display: flex;
+
     top: 0;
     bottom: 0;
-    left: 0.5em;
+    left: 0;
     width: 15em;
+    display: flex;
+    flex-direction: column;
+
+}
+
+#type_selector {
+    display: flex;
+    height: 20vh;
+    width: 100%;
+    border: 1px solid black;
+}
+
+.item_list {
+    display: flex;
+    height: 79vh;
+    width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
 
@@ -14,6 +28,7 @@
     overflow-y: scroll;
     overflow-x: hidden;
 }
+
 
 .item_attb {
     position: absolute;
@@ -34,7 +49,6 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     margin: 0;
 }
 .item_list .body_part {
-    display: flex;
     flex-direction: column;
     border: 1px solid black;
     width: 45%;
@@ -79,3 +93,4 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     height: 0;
     width: 0;
 }
+

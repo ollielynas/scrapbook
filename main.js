@@ -278,7 +278,7 @@ function spawn_part(e) {
 
   let keys = ["name", "int", "pwr", "def", "mbl", "hp", "stl"];
 
-  for (let i = 0; i < 7; i += 1) {
+  for (let i in keys) {
     part.setAttribute(keys[i], this.getAttribute(keys[i]));
   }
 
