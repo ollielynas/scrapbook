@@ -27,11 +27,12 @@
 
 #left_bar {
     position: absolute;
+    background-color: rgb(239, 239, 239);
 
     top: 0.5em;
     bottom: 0;
     left: 0.5;
-    width: 15em;
+    width: 18em;
     display: flex;
     flex-direction: column;
 
@@ -40,14 +41,16 @@
 #type_selector {
     display: flex;
     height: min-content;
-    width: 100%;
-    border: 1px solid black;
-
+    width: 95%;
+    margin: 0.2em;
+    padding: 0.2em;
     flex-direction: row;
     flex-wrap: wrap;
 
     justify-content: space-around;
     align-items: center;
+    background-color: rgb(251, 250, 250);
+
 }
 
 .part_type {
@@ -56,7 +59,7 @@
     object-fit: contain;
 
     cursor: pointer;
-
+    
     filter: grayscale(100%) opacity(20%);
 }
 
@@ -74,8 +77,9 @@
     width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
-
+    justify-content: space-around;
     gap: 0.5em;
+    padding-top: 0.4em;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -102,11 +106,17 @@ body:not(:has(.part_container[target="true"])) .item_attb {
 .item_list .body_part {
     flex-direction: column;
     border: 1px solid black;
-    width: 45%;
+    width: 40%;
+    font-family: "Special Elite", system-ui;
+  font-weight: 400;
+  font-style: normal;
+  padding: 0.2em;
+  background-color: rgb(255, 251, 238);
 }
 
 .item_list img {
-    width: 80%;
+    width: 95%;
+    padding: 2%;
 }
 
 .canvas {
@@ -142,7 +152,7 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     overflow: hidden;
     position: relative;
     outline: 1px solid black;
-    background-color: white;
+    background-color: rgb(255, 251, 238);
 }
 
 .card p {
@@ -187,7 +197,8 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     padding-right: 5%;
     
     display: grid;
-    grid-template-columns: 1fr 0.3fr 1fr 1fr 0.3fr 0fr;
+    grid-template-columns: 1fr 0.3fr 0fr 1fr 0.3fr 0fr;
+    gap: 0.2em;
 }
 .text_container > * {
     padding: 0;
