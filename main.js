@@ -466,7 +466,7 @@ function create_card(data, width, card_name) {
 
     max_top = Math.min(max_top, elem.offsetTop - elem.clientHeight / 2);
     max_bottom = Math.min( max_bottom, data.clientHeight - (elem.offsetTop + elem.clientHeight / 2));
-    max_left = Math.min(max_left, elem.offsetLeft - elem.clientWidth / 2);
+    max_left = Math.min(max_left, elem.offsetLeft - elem.clientWidth/2);
     max_right = Math.min( max_right, data.clientWidth - (elem.offsetTop + elem.clientWidth / 2));
 
     let elem_clone = elem.cloneNode(true);
