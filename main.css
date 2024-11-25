@@ -1,7 +1,28 @@
+
+.top_bar {
+    position: static;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 2em;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.2em;
+}
+
+.top_bar #creature_name {
+    height: 1em;
+}
+
+#creature_name[contenteditable="true"] + i {
+    display: none;
+}
+
 #left_bar {
     position: absolute;
 
-    top: 0;
+    top: 2em;
     bottom: 0;
     left: 0;
     width: 15em;
