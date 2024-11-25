@@ -470,10 +470,49 @@ function create_card(data, width) {
 }
 
 
+function setUpSelectors() {
+  const selectors = document.getElementsByClassName("part_type");
+
+  function updateSelection() {
+    let selected = [];
+
+    for (const elem of selectors) {
+      let val = (elem.getAttribute("selected") || "false") == "true";
+
+      if (val) {
+        selected.push(elem.getAttribute("key"));
+      }
+    }
+    
+    for (const partCard of document.getElementsByClassName("body_part")) {
+      const name = partCard.getAttribute("name");
+
+      if (selected.length == 0 || selected.map((x) => name.startsWith(x)).includes(true)) {
+        partCard.style.display = "block";
+      } else {
+        partCard.style.display = "none";
+      }
+    }
+  }
+
+  for (const elem of selectors) {
+    elem.onclick = (e) => {
+      let val = (elem.getAttribute("selected") || "false") == "true";
+      
+      elem.setAttribute("selected", ""+!val);
+
+      updateSelection();
+    };
+  }
+
+  updateSelection();
+}
+
+setUpSelectors();
+
 try {
   load_from_url();
-}
-catch(err) {
+} catch(err) {
   console.log(err);
 }
 let card = create_card(canvas);
