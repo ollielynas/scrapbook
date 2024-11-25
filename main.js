@@ -15,7 +15,7 @@ function loadFile(filePath) {
   return result;
 }
 
-let csv = loadFile("metadata.csv");
+let csv = loadFile("metadata.csv").replaceAll("\r", "");
 
 let hash_keys = {};
 
@@ -101,7 +101,7 @@ function convert_to_char(elem) {
 }
 
 function load_from_url() {
-
+  
   if (window.location.href.split('=').length != 2 || window.location.href.split('=')[1] == "") {
     return;
   }
@@ -117,6 +117,9 @@ function load_from_url() {
     }
   }else {
     text = decompressUrlSafe(window.location.href.split('=')[1])
+    if (text == "") {
+      return;
+    }
   }
 
   console.log(text);
@@ -251,6 +254,17 @@ function update_item_val(e) {
   focus.style.zIndex = z_index.value + "";
 }
 
+const keys = ["name", "int", "pwr", "def", "mbl", "hp", "stl"];
+const names = [
+  "name",
+  "intelligence",
+  "power",
+  "defense",
+  "mobility",
+  "health",
+  "stealth",
+];
+
 part_attb.oninput = update_item_val;
 
 function update_item_attb_menu() {
@@ -342,20 +356,14 @@ for (let line of csv.split("\n")) {
 
   elm.appendChild(img);
 
-  let keys = ["name", "int", "pwr", "def", "mbl", "hp", "stl"];
-  let names = [
-    "name",
-    "intelligence",
-    "power",
-    "defense",
-    "mobility",
-    "health",
-    "stealth",
-  ];
 
+  
+  
+  
   hash_keys[convertBase(String(attb[0].hashCode()),10,MAX_BASE)] = attb[0];
-
+  stats[attb[0]] = {};
   for (let i = 0; i < 7; i += 1) {
+    stats[attb[0]][keys[i]] = attb[i];
     let text = document.createElement("p");
     text.innerText = names[i] + ": " + attb[i];
     elm.setAttribute(keys[i], attb[i]);
@@ -425,12 +433,51 @@ function dragElement(elmnt) {
   }
 }
 
+function create_card(data, width) {
+
+  let card_body = document.createElement("div");
+  let this_stats = {};
+
+  for (let k of keys) {
+    this_stats[k] = 0;
+  }
+
+  let img = document.createElement("div");
+  img.className = "card_img";
+  for (const elem of data.children) {
+    let node = elem.cloneNode(true);
+    img.appendChild(node);
+    for (let i of keys) {
+      if (i == "name") {
+        continue;
+      }      
+      let value = parseInt(stats[node.getAttribute("name")][i] || "0");
+      this_stats[i] += value;
+    }
+  }
+
+  card_body.appendChild(img);
+  console.log(this_stats);
+  let text = document.createElement("p");
+  text.innerText = this_stats.toString();
+
+
+  card_body.appendChild(text);
+
+  return card_body;
+
+
+}
+
+
 try {
   load_from_url();
 }
 catch(err) {
-  console.err(err);
+  console.log(err);
 }
+let card = create_card(canvas);
+
 
 setInterval(()=> {
   if (window.history.replaceState) {
