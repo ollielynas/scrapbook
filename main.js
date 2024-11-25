@@ -448,16 +448,27 @@ function create_card(data, width, card_name) {
   }
   
   
+  
   card_body.style.width = width;
   let img = document.createElement("div");
+  card_body.appendChild(img);
   img.className = "card_img";
   img.style.width = width;
   img.style.height = width;
 
 
-
+  let max_left = 999999;
+  let max_right = 999999;
+  let max_top = 999999;
+  let max_bottom = 999999;
 
   for (const elem of data.children) {
+
+    max_top = Math.min(max_top, elem.offsetTop - elem.clientHeight / 2);
+    max_bottom = Math.min( max_bottom, data.clientHeight - (elem.offsetTop + elem.clientHeight / 2));
+    max_left = Math.min(max_left, elem.offsetLeft - elem.clientWidth / 2);
+    max_right = Math.min( max_right, data.clientWidth - (elem.offsetTop + elem.clientWidth / 2));
+
     let elem_clone = elem.cloneNode(true);
     let child_img = elem_clone.querySelector(".part_img");
     child_img.className = "card_sub_img";
@@ -468,12 +479,17 @@ function create_card(data, width, card_name) {
     child_img.style.transform = elem_clone.style.transform;
     child_img.style.WebkitTransform = elem_clone.style.WebkitTransform;
     let old_width = child_img.style.width;
-    let scale = parseFloat(width.replace("em", ""))/40.0;
+    let scale = parseFloat(width.replace("em", ""))/(40.0);
 
 
     child_img.style.width = "calc( "+old_width+" * "+scale+" )";
 
     img.appendChild(child_img);
+
+    // console.log(child_img.offsetTop);
+
+    // console.log(child_img);
+
     for (let i of keys) {
       if (i == "name") {
         continue;
@@ -483,15 +499,36 @@ function create_card(data, width, card_name) {
     }
   }
 
-  card_body.appendChild(img);
+
+  let max_stat = -999;
+
+
+  for (let stat in this_stats) {
+    if (this_stats[stat] > max_stat) {
+      max_stat = this_stats[stat];
+    } 
+  }
 
   let text_container = document.createElement("div");
   text_container.className = "text_container";
   let title = document.createElement("p");
   title.innerText = card_name;
   title.className = "creature_title";
+  console.log(max_left, max_right);
 
-  text_container.appendChild(title);
+
+  if (max_bottom < max_top) {
+    title.style.top = "0.1em";
+  }else {
+    title.style.bottom = "40%";
+  }
+  if (max_left > max_right) {
+    title.style.left = "0.1em";
+  }else {
+    title.style.right = "0.1em";
+  }
+
+  card_body.appendChild(title);
 
   for (let i in keys) {
     if (i == 0) {
@@ -503,6 +540,13 @@ function create_card(data, width, card_name) {
 
     let line2 = document.createElement("p");
     line2.innerText = "" + this_stats[keys[i]];
+    if (max_stat != 0) {
+    if (this_stats[keys[i]] == max_stat) {
+      line2.className = keys[i] + " max_stat";
+      line.className = keys[i] + " max_stat";
+    }
+    }
+
     text_container.appendChild(line2);
 
     text_container.appendChild(document.createElement("p"));
@@ -563,8 +607,8 @@ try {
 
 
 
+
 setInterval(()=> {
-  
   let card = create_card(canvas, "10em", creature_name);
   document.getElementById("current_stats").innerHTML = card.outerHTML;
 
