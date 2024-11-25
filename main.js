@@ -24,7 +24,6 @@ let creature_name = "unnamed";
 
 document.getElementById("creature_name").oninput = (e) => {
   creature_name = e.target.innerText.replaceAll("\n", "");
-  console.log(creature_name);
 }
 
 String.prototype.hashCode = function() {
@@ -110,7 +109,6 @@ function load_from_url() {
   if (text_before.split(";").length > 1) {
     name = decodeURIComponent(text_before.split(";")[0]);
     text = decompressUrlSafe(text_before.split(";")[1]);
-    console.log(name);
     if (text == "") {
       return;
     }
@@ -121,7 +119,6 @@ function load_from_url() {
     }
   }
 
-  console.log(text);
   
   creature_name = name;
 
@@ -475,7 +472,6 @@ function create_card(data, width, card_name) {
 
     child_img.style.width = "calc( "+old_width+" * "+scale+" )";
 
-    console.log("calc( "+old_width+" * "+scale+" )");
     img.appendChild(child_img);
     for (let i of keys) {
       if (i == "name") {
@@ -487,7 +483,6 @@ function create_card(data, width, card_name) {
   }
 
   card_body.appendChild(img);
-  console.log(this_stats);
 
   let text_container = document.createElement("div");
   text_container.className = "text_container";
