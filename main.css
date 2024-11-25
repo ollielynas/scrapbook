@@ -20,6 +20,10 @@
     display: none;
 }
 
+.canvas {
+    z-index: -1000;
+}
+
 #left_bar {
     position: absolute;
 
@@ -81,7 +85,7 @@
     top: 0;
     bottom: 0;
     right: 0;
-    width: 10em;
+    width: 11em;
     gap: 0.5em;
     overflow-y: scroll;
 }
@@ -106,12 +110,11 @@ body:not(:has(.part_container[target="true"])) .item_attb {
 
 .canvas {
     position: absolute;
-    left: 50vw;
-    top: 50vh;
+    left: calc( 50vw - 20em);
+    top: calc( 50vh - 20em);
     border: 1px black solid;
     height: 40em;
     width: 40em;
-    transform: translate(-50%, -50%);
 }
 
 .part_container {
@@ -130,13 +133,56 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     width: 8em;
 }
 
-.background {
-    margin: 1000em;
-    background-color: burlywood;
-    position: absolute;
-    left: 50vw;
-    right: 50vh;
-    height: 0;
-    width: 0;
+
+.card {
+    overflow: hidden;
+    position: relative;
+    outline: 1px solid black;
 }
+.card_img {
+    position: relative;
+    top: -5%;
+    /* transform: scale(0.8); */
+    scale: 0.8;
+}
+
+.card_sub_img {
+    transform-style: preserve-3d;
+    transform-origin: top left;
+    position: absolute;
+}
+
+.current_stats {
+    height: 15em;
+    width: 11em;
+    position: absolute;
+    right: 1em;
+    bottom: 1em;
+    padding: 5px;
+}
+
+.text_container {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    display: flex;
+    height: 40%;
+    flex-wrap: wrap;
+    gap: 0.0em;
+    flex-direction: column;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.text_container > * {
+    padding: 0;
+    margin: 0;
+}
+
+.creature_title {
+    width: 100%;
+    position: absolute;
+    top: -1em;
+}
+
 

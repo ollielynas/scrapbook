@@ -3,7 +3,6 @@
 import { compressUrlSafe, decompressUrlSafe } from './lzma-url.js';
 
 
-
 function loadFile(filePath) {
   var result = null;
   var xmlhttp = new XMLHttpRequest();
@@ -257,7 +256,7 @@ function update_item_val(e) {
 const keys = ["name", "int", "pwr", "def", "mbl", "hp", "stl"];
 const names = [
   "name",
-  "intelligence",
+  "intel",
   "power",
   "defense",
   "mobility",
@@ -321,6 +320,8 @@ function spawn_part(e) {
   dragElement(part);
   canvas.appendChild(part);
 
+  img.style.width = "8em";
+
   part.onmousedown(e);
 
   part.style.left =
@@ -335,6 +336,9 @@ function spawn_part(e) {
     (e.pageY - this.getBoundingClientRect().top)
     + part.clientHeight / 2 +
     "px";
+
+  part.style.transform = "translate(-50%, -50%)";
+  part.style.WebkitTransform = part.style.transform;
 }
 
 for (let line of csv.split("\n")) {
@@ -433,40 +437,78 @@ function dragElement(elmnt) {
   }
 }
 
-function create_card(data, width) {
+function create_card(data, width, card_name) {
 
   let card_body = document.createElement("div");
-  let this_stats = {};
+  card_body.className = "card";
+  card_body.style.width = width;
+  card_body.style.height = "calc( 1.4 * " + width + ")";
 
+  let this_stats = {};
+  
   for (let k of keys) {
     this_stats[k] = 0;
   }
-
+  
+  
+  card_body.style.width = width;
   let img = document.createElement("div");
   img.className = "card_img";
+  img.style.width = width;
+  img.style.height = width;
+
+
+
+
   for (const elem of data.children) {
-    let node = elem.cloneNode(true);
-    img.appendChild(node);
+    let elem_clone = elem.cloneNode(true);
+    let child_img = elem_clone.querySelector(".part_img");
+    child_img.className = "card_sub_img";
+    
+    child_img.style.top = elem_clone.style.top;
+    child_img.style.left = elem_clone.style.left;
+    child_img.style.transform = elem_clone.style.transform;
+    child_img.style.WebkitTransform = elem_clone.style.WebkitTransform;
+    let old_width = child_img.style.width;
+    let scale = parseFloat(width.replace("em", ""))/40.0;
+
+
+    child_img.style.width = "calc( "+old_width+" * "+scale+" )";
+
+    console.log("calc( "+old_width+" * "+scale+" )");
+    img.appendChild(child_img);
     for (let i of keys) {
       if (i == "name") {
         continue;
-      }      
-      let value = parseInt(stats[node.getAttribute("name")][i] || "0");
+      }
+      let value = parseInt(stats[elem.getAttribute("name")][i] || "0");
       this_stats[i] += value;
     }
   }
 
   card_body.appendChild(img);
   console.log(this_stats);
-  let text = document.createElement("p");
-  text.innerText = this_stats.toString();
 
+  let text_container = document.createElement("div");
+  text_container.className = "text_container";
+  let title = document.createElement("p");
+  title.innerText = card_name;
+  title.className = "creature_title";
 
-  card_body.appendChild(text);
+  text_container.appendChild(title);
+
+  for (let i in keys) {
+    if (i == 0) {
+      continue;
+    }
+    let line = document.createElement("p");
+    line.innerText = names[i]+": " + this_stats[keys[i]];
+    text_container.appendChild(line);
+  }
+
+  card_body.appendChild(text_container);
 
   return card_body;
-
-
 }
 
 
@@ -515,10 +557,15 @@ try {
 } catch(err) {
   console.log(err);
 }
-let card = create_card(canvas);
+
+
 
 
 setInterval(()=> {
+  
+  let card = create_card(canvas, "10em", creature_name);
+  document.getElementById("current_stats").innerHTML = card.outerHTML;
+
   if (window.history.replaceState) {
     let data = "";
     for (let elem of document.getElementsByClassName("part_container")) {
@@ -530,4 +577,4 @@ setInterval(()=> {
   );
   }
 
-}, 2000);
+}, 100);

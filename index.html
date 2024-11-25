@@ -8,9 +8,7 @@
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="preload" href="metadata.csv" as="fetch" />
-    <script src=
-    "https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
-        </script>
+
     
 </head>
 <body>
@@ -44,10 +42,8 @@
     </div>
         
     
-    <div id="background">
     <div id="part_canvas" class="canvas">
         
-    </div>
     </div>
     <div class="item_attb" id="item_attb">
         <label id="name">nothing is selected</label>
@@ -55,13 +51,16 @@
         <input type="range" id="angle" name="angle" min="-360" max="360"> 
         <label for="scale">scale:</label>
         <input type="range" id="scale" name="scale" value="10" min="1" max="50"> 
-        <label for="z_index">z index:</label>
+        <label for="z_index">z-index:</label>
         <input type="number" id="z_index" name="z_index"> 
         <label for="z_index">flip h:</label>
         <input type="checkbox" id="flip_h" name="flip_h"> 
         <label for="z_index">flip v:</label>
         <input type="checkbox" id="flip_v" name="flip_v">
         <button id="del_button">delete</button>
+    </div>
+    <div class="current_stats" id="current_stats">
+
     </div>
     <script type="module" src='main.js'></script>
     
