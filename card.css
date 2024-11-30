@@ -102,8 +102,9 @@
     margin: 0.1em;
     position: absolute;
     z-index: 1;
-
-    font-size: 1.1em !important;
+    max-width: 90%;
+    overflow-wrap: break-word;
+    /* font-size: 1.1em !important; */
     /* font-size: 1.3em !important; */
     padding-bottom: 0.0em !important;
     margin: 0.1em !important;
