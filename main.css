@@ -12,6 +12,11 @@
     justify-content: center;
     gap: 0.2em;
 }
+
+body {
+    overflow: hidden;
+}
+
 html {
     font-family: "Special Elite", system-ui;
     font-weight: 400;
