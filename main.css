@@ -166,7 +166,7 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     width: 40em;
     background-color: white;
     filter: drop-shadow(0.0 0.0em 0.2em #000000);
-
+    z-index: 10;
 }
 
 .part_container {
