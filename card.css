@@ -1,5 +1,8 @@
 
 .card {
+    -webkit-print-color-adjust: exact !important;   /* Chrome, Safari 6 – 15.3, Edge */
+    color-adjust: exact !important;                 /* Firefox 48 – 96 */
+    print-color-adjust: exact !important; 
     outline-offset: -0.1em;
     outline: 0.1em rgb(86, 79, 1) groove;
     font-family: "Special Elite", system-ui;
@@ -157,10 +160,12 @@
     left: 0.6em;
     border-radius: 0.4em;
     height: 25%;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
     z-index: 100;
     padding: 0.0em;
     margin: 0.0em;
+    outline: 0.04em solid black;
     /* filter: drop-shadow(0.0 0.07em 0.07em #000000); */
 }
 

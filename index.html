@@ -9,16 +9,16 @@
 <script src="https://unpkg.com/@popperjs/core@2"></script>
 <script src="https://unpkg.com/tippy.js@6"></script>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='book.css'>
-    <link rel='stylesheet' type='text/css' media='screen' href='card.css'>
+    <link rel='stylesheet' type='text/css' href='main.css'>
+    <link rel='stylesheet' type='text/css' href='book.css'>
+    <link rel='stylesheet' type='text/css' href='card.css'>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link rel="preload" href="metadata.csv" as="fetch" />
 
 </head>
 <body>
     <div id="book" class="scrapbook">
-        <!-- <button id='print_button' onclick="document.getElementById('print_button').remove(); PrintDiv('book')">print</button> -->
+        
     </div>
     <div class="top_bar" >
         <div id="creature_name" contenteditable="false" onfocusout="this.setAttribute('contenteditable','false')">unnamed</div><i class="ph ph-pencil-simple" onclick="document.getElementById('creature_name').setAttribute('contenteditable','true');document.getElementById('creature_name').focus();document.execCommand('selectAll', false, null);"></i>

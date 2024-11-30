@@ -200,15 +200,4 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     z-index: 12;
 }
 
-@media print {
-    body {
-      display: none !important;
-    }
-    .card {
-      visibility: visible;
-      position: absolute;
-      left: 0;
-      top: 0;
-    }
-  }
 
