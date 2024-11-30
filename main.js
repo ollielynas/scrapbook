@@ -98,14 +98,13 @@ function convert_to_char(elem) {
   return text;
 }
 
-function load_from_url() {
+function load_from_url(url) {
   
-  if (window.location.href.split('=').length != 2 || window.location.href.split('=')[1] == "") {
-    return;
-  }
+  canvas.innerHTML = "";
+
   let name = "unnamed";
   let text = "";
-  let text_before = window.location.href.split('=')[1];
+  let text_before = url;
   if (text_before.split(";").length > 1) {
     name = decodeURIComponent(text_before.split(";")[0]);
     text = decompressUrlSafe(text_before.split(";")[1]);
@@ -113,7 +112,7 @@ function load_from_url() {
       return;
     }
   }else {
-    text = decompressUrlSafe(window.location.href.split('=')[1])
+    text = decompressUrlSafe(url)
     if (text == "") {
       return;
     }
@@ -437,6 +436,31 @@ function dragElement(elmnt) {
   }
 }
 
+function isVisible(elem) {
+  if (!(elem instanceof Element)) throw Error('DomUtil: elem is not an element.');
+  const style = getComputedStyle(elem);
+  if (style.display === 'none') return false;
+  if (style.visibility !== 'visible') return false;
+  if (style.opacity < 0.1) return false;
+  if (elem.offsetWidth + elem.offsetHeight + elem.getBoundingClientRect().height +
+      elem.getBoundingClientRect().width === 0) {
+      return false;
+  }
+  const elemCenter   = {
+      x: elem.getBoundingClientRect().left + elem.offsetWidth / 2,
+      y: elem.getBoundingClientRect().top + elem.offsetHeight / 2
+  };
+  if (elemCenter.x < 0) return false;
+  if (elemCenter.x > (document.documentElement.clientWidth || window.innerWidth)) return false;
+  if (elemCenter.y < 0) return false;
+  if (elemCenter.y > (document.documentElement.clientHeight || window.innerHeight)) return false;
+  let pointContainer = document.elementFromPoint(elemCenter.x, elemCenter.y);
+  do {
+      if (pointContainer === elem) return true;
+  } while (pointContainer = pointContainer.parentNode);
+  return false;
+}
+
 function create_card(data, width, card_name) {
 
   let card_body = document.createElement("div");
@@ -467,15 +491,22 @@ function create_card(data, width, card_name) {
 
   for (const elem of data.children) {
 
+  // delate if off screen    
+    // if (!isVisible(elem)) {
+    //   if (elem.getAttribute("target") != "true") {
+    //   elem.remove();
+    //   continue;
+    // }
+    // }
     max_top = Math.min(max_top, elem.offsetTop - elem.clientHeight / 2);
     max_bottom = Math.min( max_bottom, data.clientHeight - (elem.offsetTop + elem.clientHeight / 2));
-    max_left = Math.min(max_left, elem.offsetLeft - elem.clientWidth/2);
+    max_left = Math.min(max_left, elem.offsetLeft);
     max_right = Math.min( max_right, data.clientWidth - (elem.offsetTop + elem.clientWidth / 2));
 
     let elem_clone = elem.cloneNode(true);
     let child_img = elem_clone.querySelector(".part_img");
     child_img.className = "card_sub_img";
-    
+
     child_img.style.top = elem_clone.style.top;
     child_img.style.left = elem_clone.style.left;
     child_img.style.zIndex = elem_clone.style.zIndex;
@@ -492,7 +523,7 @@ function create_card(data, width, card_name) {
     // console.log(child_img.offsetTop);
 
     // console.log(child_img);
-
+    
     for (let i of keys) {
       if (i == "name") {
         continue;
@@ -501,22 +532,30 @@ function create_card(data, width, card_name) {
       this_stats[i] += value;
     }
   }
-
-
+  
+  
+  
   let max_stat = -999;
-
-
+  
+  let stats_elem = document.createElement("div");
+  stats_elem.className = "stats_elem";
+  let card_border = document.createElement("div");
+  card_border.className = "card_border";
+  card_body.appendChild(card_border);
+  
   for (let stat in this_stats) {
+    
     if (this_stats[stat] > max_stat) {
       max_stat = this_stats[stat];
     } 
   }
 
+  card_body.appendChild(stats_elem);
+
   let text_container = document.createElement("div");
   text_container.className = "text_container";
   let title = document.createElement("p");
   title.innerText = card_name;
-  console.log(title.innerText.length);
   title.style.fontSize = "1.3em";
   if (title.innerText.length > 10) {
     title.style.fontSize = "0.8em";
@@ -529,14 +568,14 @@ function create_card(data, width, card_name) {
 
 
   if (max_bottom < max_top) {
-    title.style.top = "0.1em";
+    title.style.top = "1.0em";
   }else {
     title.style.bottom = "40%";
   }
   if (max_left > max_right) {
-    title.style.left = "0.1em";
+    title.style.left = "1.5em";
   }else {
-    title.style.right = "0.1em";
+    title.style.right = "0.5em";
   }
 
   card_body.appendChild(title);
@@ -551,10 +590,21 @@ function create_card(data, width, card_name) {
 
     let line2 = document.createElement("p");
     line2.innerText = "" + this_stats[keys[i]];
+
+    let stat_elem = document.createElement("p");
+    stat_elem.className = "stat_elem";
+    stat_elem.innerText =  this_stats[keys[i]] + "";
+
+    stats_elem.appendChild(stat_elem);
+
     if (max_stat != 0) {
+
+      
     if (this_stats[keys[i]] == max_stat) {
       line2.className = keys[i] + " max_stat";
       line.className = keys[i] + " max_stat";
+      stat_elem.className =  "stat_elem max_stat " + keys[i];
+
     }
     }
 
@@ -610,7 +660,11 @@ function setUpSelectors() {
 setUpSelectors();
 
 try {
-  load_from_url();
+  if (window.location.href.split('=').length != 2 || window.location.href.split('=')[1] == "") {
+    // return;
+  }else {
+  load_from_url(window.location.href.split('=')[1]);
+}
 } catch(err) {
   console.log(err);
 }
@@ -622,7 +676,6 @@ try {
 setInterval(()=> {
   let card = create_card(canvas, "10em", creature_name);
   document.getElementById("current_stats").innerHTML = card.outerHTML;
-
   if (window.history.replaceState) {
     let data = "";
     for (let elem of document.getElementsByClassName("part_container")) {
@@ -635,3 +688,23 @@ setInterval(()=> {
   }
 
 }, 100);
+
+let before = "";
+window.before = before;
+function open_book() {
+  let book = document.getElementById("book");
+  before = window.location.href;
+  for (let i in localStorage) {
+    // console.log(i);
+    if (i.startsWith("card_entry-")) {
+      load_from_url(localStorage.getItem(i));
+      let a = create_card(canvas, "10em", i.replace("card_entry-", ""));
+      // console.log(localStorage.getItem(i));
+      // console.log(a);
+      book.appendChild(a);
+    }
+  }
+  book.style.transform = "translateX(0%)";
+}
+
+window.open_book = open_book;
