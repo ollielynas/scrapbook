@@ -745,9 +745,12 @@ function open_book() {
         "');document.getElementById('book').innerHTML='';" +
         "document.getElementById('book').style.transform = 'translateY(200%)'"
       );
+
       book.appendChild(a);
       tippy(a, {content:"edit"});
     }
+
+    
   }
   book.style.transform = "translateY(0%)";
 }

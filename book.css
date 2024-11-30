@@ -38,6 +38,7 @@ body:has(.part_container[target="true"]) .actions {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: space-around;
     gap: 1em;
     padding: 1em;
     background-color: white;
