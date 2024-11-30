@@ -507,7 +507,7 @@ function create_card(data, width, card_name) {
   card_body.className = "card";
   card_body.style.width = width;
   card_body.style.height = "calc( 1.4 * " + width + ")";
-
+  card_name = decodeURIComponent(card_name);
   let this_stats = {};
 
   for (let k of keys) {
