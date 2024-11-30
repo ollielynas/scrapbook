@@ -197,6 +197,7 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     transform-origin: bottom right;
     transition: all 0.3s;
     scale: 1;
+    z-index: 12;
 }
 
 @media print {
