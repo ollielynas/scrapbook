@@ -124,9 +124,11 @@ html {
     position: absolute;
     top: 0;
     right: 0;
-    width: 11em;
-    gap: 0.8em;
-
+    /* width: 11em; */
+    /* gap: 0.8em; */
+    display: flex;
+    flex-direction: column;
+    
     overflow-y: scroll;
     font-family: "Roboto", sans-serif;
     font-weight: 400;
@@ -135,7 +137,7 @@ html {
 }
 
 .item_attb * {
-    margin-top: 0.4em;
+    /* margin-top: 0.4em; */
 }
 
 body:not(:has(.part_container[target="true"])) .item_attb {
