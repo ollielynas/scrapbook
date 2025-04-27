@@ -49,3 +49,15 @@ tippy(
         content: "clear canvas",
       }
 )
+tippy(
+    "#set-author",
+    {
+        content: "set author",
+      }
+)
+tippy(
+    "#submit",
+    {
+        content: "submit to official list",
+      }
+)

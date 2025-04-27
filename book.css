@@ -12,7 +12,6 @@
 body:has(.part_container[target="true"]) .actions {
     display: none;
 }
-
 .actions * {
     font-size: 1.6em;
     border: none;
@@ -33,15 +32,17 @@ body:has(.part_container[target="true"]) .actions {
     top: 0;
     bottom: 0;
     left: 0;
-    transition: all 0.3s;
     right: 0;
+    /* transition: all 0.3s; */
     display: flex;
+    /* width: calc( 100dvw - 2em );
+    height: calc( 100dvh - 2em ); */
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
     gap: 1em;
     padding: 1em;
     background-color: white;
+    overflow-y: scroll;
 }
-
 

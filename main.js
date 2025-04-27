@@ -1,6 +1,13 @@
 // import { decompressUrlSafe } from './lzma-url.js';
 import { compressUrlSafe, decompressUrlSafe } from "./lzma-url.js";
 
+
+window.current_author = localStorage.getItem("author");
+
+if (window.current_author === null) {
+
+}
+
 function loadFile(filePath) {
   var result = null;
   var xmlhttp = new XMLHttpRequest();
@@ -23,6 +30,7 @@ let creature_name = "unnamed";
 document.getElementById("creature_name").oninput = (e) => {
   creature_name = e.target.innerText.replaceAll("\n", "");
 };
+
 
 String.prototype.hashCode = function () {
   var hash = 0,
@@ -125,8 +133,8 @@ function convert_to_char(elem) {
 }
 
 function load_from_url(url) {
+  
   canvas.innerHTML = "";
-
   let name = "unnamed";
   let text = "";
   let text_before = url;
@@ -148,6 +156,9 @@ function load_from_url(url) {
   document.getElementById("creature_name").innerText = creature_name;
 
   let text_array = text.split(";");
+  if (text_array.length % 8 == 1) {
+    window.current_author =  text_array.pop();
+  }
 
   for (let offset = 0; offset < text_array.length; offset += 8) {
     let neg_str = text_array[offset + 0];
@@ -158,6 +169,8 @@ function load_from_url(url) {
     let flip_h_v_str = text_array[offset + 5];
     let x_str = text_array[offset + 6];
     let y_str = text_array[offset + 7];
+
+    
 
     let temp = convertBase(neg_str, MAX_BASE, 2);
 
@@ -511,7 +524,7 @@ function create_card(data, width, card_name) {
   let this_stats = {};
 
   for (let k of keys) {
-    this_stats[k] = 0;
+    this_stats[k] = 10;
   }
 
   card_body.style.width = width;
@@ -527,13 +540,6 @@ function create_card(data, width, card_name) {
   let max_bottom = 999999;
 
   for (const elem of data.children) {
-    // delate if off screen
-    // if (!isVisible(elem)) {
-    //   if (elem.getAttribute("target") != "true") {
-    //   elem.remove();
-    //   continue;
-    // }
-    // }
     max_top = Math.min(max_top, elem.offsetTop - elem.clientHeight / 2);
     max_bottom = Math.min(
       max_bottom,
@@ -561,10 +567,6 @@ function create_card(data, width, card_name) {
 
     img.appendChild(child_img);
 
-    // console.log(child_img.offsetTop);
-
-    // console.log(child_img);
-
     for (let i of keys) {
       if (i == "name") {
         continue;
@@ -590,11 +592,29 @@ function create_card(data, width, card_name) {
 
   card_body.appendChild(stats_elem);
 
+  let stats_title = document.createElement("div");
+  stats_title.className = "stats_title";
+  stats_title.innerText = "━━━━━━┫ ATTRIBUTES ┣━━━━━━"
+  card_body.appendChild(stats_title);
+  let approved = document.createElement("div");
+  approved.className = "approved_text";
+
+  if (window.current_author === null || window.current_author === "null") {
+  approved.innerText = "Approved by the NZ creatures commission (1840)"
+}else{
+    approved.innerText = "Submitted to the NZCC by "+window.current_author
+  }
+  card_body.appendChild(approved);
+
+
   let text_container = document.createElement("div");
   text_container.className = "text_container";
+  
   let title = document.createElement("p");
-  title.innerText = card_name;
+  title.innerText =  card_name;
   title.style.fontSize = "1.1em";
+  
+
   if (title.innerText.length > 10) {
     title.style.fontSize = "0.8em";
   }
@@ -717,6 +737,9 @@ setInterval(() => {
       let d = convert_to_char(elem);
       data = data + (data == "" ? "" : ";") + d;
     }
+    if (window.current_author !== null) {
+      data += ";"+window.current_author;
+    }
     data = compressUrlSafe(data);
     window.history.replaceState(
       {},
@@ -726,21 +749,90 @@ setInterval(() => {
   }
 }, 100);
 
+window.book_open = false;
+function beforePrint() {
+    if (!window.book_open) {
+      open_book();
+    }
+    let book = document.getElementById("book");
+    var element = document.getElementById("scrapbook-buttons");
+    if (element!==null) {
+      element.parentNode.removeChild(element);
+    }
+    book.style.overflowY = "clip";
+}
+function afterPrint() {
+
+  document.body.onfocus = () => {
+  window.location.reload();
+}
+}
+
+if (window.matchMedia) {
+  window.matchMedia('print').addListener(function (mql) {
+      if (mql.matches) {
+          beforePrint();
+      }
+      else {
+          afterPrint();
+      }
+  });
+}
+// For IE, does not attach in browsers that do not support these events
+window.addEventListener('beforeprint', beforePrint, false);
+window.addEventListener('afterprint', afterPrint, false);
+
 let before = "";
 window.before = before;
 function open_book() {
-  let book = document.getElementById("book");
+  window.book_open = true;
   before = window.location.href;
+  let book = document.getElementById("book");
+  
+  let buttons = document.createElement("div");
+  buttons.id = "scrapbook-buttons";
+  
+  
+  let back_button = document.createElement("a");
+  back_button.href = before;
+  console.log(before);
+  back_button.innerHTML = "<i class=\"ph ph-arrow-fat-left\">";
+  
+
+
+  let print = document.createElement("i");
+  console.log(before);
+  print.className = "ph ph-printer";
+  print.onclick = () => {
+    beforePrint();
+    window.print();
+  };
+  buttons.appendChild(print);
+  
+  buttons.appendChild(back_button);
+
+  book.appendChild(buttons);
+
+  let first = before;
   for (let i in localStorage) {
     // console.log(i);
     if (i.startsWith("card_entry-")) {
       load_from_url(localStorage.getItem(i));
       let a = create_card(canvas, "10em", i.replace("card_entry-", ""));
-      // console.log(localStorage.getItem(i));
-      // console.log(a);
+      
+      let delete_card = document.createElement("i");
+      delete_card.className = "ph ph-trash";
+      
+      delete_card.setAttribute(
+        "onclick",
+        "localStorage.removeItem('"+i+"');"+
+        "document.getElementById('book').innerHTML='';" +
+        "document.getElementById('book').style.transform = 'translateY(200%)';open_book();"
+      );
+      a.appendChild(delete_card);
       a.setAttribute(
         "onclick",
-        "console.log('thing');load_from_url('" +
+        "load_from_url('" +
         localStorage.getItem(i) +
         "');document.getElementById('book').innerHTML='';" +
         "document.getElementById('book').style.transform = 'translateY(200%)'"
@@ -749,32 +841,14 @@ function open_book() {
       book.appendChild(a);
       tippy(a, {content:"edit"});
     }
-
     
   }
+  
   book.style.transform = "translateY(0%)";
+  // window.history.replaceState( {} , "?", before );
 }
 
-function PrintDiv(id) {
-  var data = document.getElementById(id).innerHTML;
-  var myWindow = window.open("", "my div", "height=400,width=600");
-  myWindow.document.write("<html><head><title>my div</title>");
-  /*optional stylesheet*/ //myWindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
-  myWindow.document.write("</head><body >");
-  myWindow.document.write(data);
-  myWindow.document.write("</body></html>");
-  myWindow.document.close(); // necessary for IE >= 10
 
-  myWindow.onload = function () {
-    // necessary if the div contain images
-
-    myWindow.focus(); // necessary for IE >= 10
-    myWindow.print();
-    myWindow.close();
-  };
-}
-
-window.PrintDiv = PrintDiv;
 window.load_from_url = load_from_url;
 
 window.open_book = open_book;

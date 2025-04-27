@@ -31,6 +31,10 @@
         <button id="view_scrapbook" onclick="window.open_book()"><i class="ph ph-book"></i></button>
         <button onclick=" navigator.clipboard.writeText(window.location.href);" id="copy_link"><i class="ph ph-link"></i></button>
         <button id="reset"><a href="./index.html" class="ph ph-eraser"></a></button>
+        <button onclick="window.current_author = prompt('Please enter your name', 'Anonymous');localStorage.setItem('author', window.current_author)" id="set-author"><i class="ph ph-signature"></i></button>
+        <button id="submit"><a target="_blank" rel="noopener noreferrer" href="https://docs.google.com/forms/d/e/1FAIpQLScjnzakAcssqTGOWG6UxR6xilTsTp2PX7aU4C3B4_Xrfg2jTg/viewform?usp=header" class="ph ph-database"></a></button>
+        <input type="checkbox" id="hide_overflow" class="hide_overflow" name="hide_overflow" value="hide_overflow">
+        <label class="hide_overflow" for="hide_overflow">hide overflow</label>
     </div>
 
     <div id="left_bar">

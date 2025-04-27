@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
+@page {
+    size: landscape;
+}
+
+.hide_overflow {
+    font-size: 0.7em !important;
+}
+
 .top_bar {
     position: absolute;
     top: 0;
@@ -14,7 +22,13 @@
 }
 
 body {
+    size: landscape;
     overflow: hidden;
+    width: 100dvw;
+    height: 100dvh;
+    padding: 0;
+    margin: 0;
+    /* overflow-y: scroll; */
 }
 
 html {
@@ -33,9 +47,11 @@ html {
     background-position-y: bottom;
     background-size: var(--s) var(--s), calc(var(--s)/5) calc(var(--s)/5);
     font-size: calc( 1vw  );
-  }
+    overflow: hidden;
+}
 
 .top_bar #creature_name {
+    margin-top: 0.5em;
     height: 1em;
     font-size: 3em;
     outline: white;
@@ -44,10 +60,12 @@ html {
 .top_bar i {
     display: none;
     font-size: 3em;
+    margin-top: 0.5em;
 }
 .top_bar:hover i {
     display: block;
     font-size: 3em;
+    margin-top: 0.5em;
 }
 
 #creature_name[contenteditable="true"] + i {
@@ -136,9 +154,7 @@ html {
     padding: 0.8em;
 }
 
-.item_attb * {
-    /* margin-top: 0.4em; */
-}
+
 
 body:not(:has(.part_container[target="true"])) .item_attb {
     display: none;
@@ -174,6 +190,10 @@ body:not(:has(.part_container[target="true"])) .item_attb {
     background-color: white;
     filter: drop-shadow(0.0 0.0em 0.2em #000000);
     z-index: 10;
+}
+
+body:has(.hide_overflow:checked) .canvas {
+    overflow: hidden;
 }
 
 .part_container {
