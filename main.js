@@ -744,7 +744,7 @@ setInterval(() => {
     window.history.replaceState(
       {},
       null,
-      window.location.href.split("?")[0] + "?d=" + creature_name + ";" + data
+      window.location.href.split("?")[0] + "?d=" + creature_name.replaceAll(" ", "%20").replaceAll("\n", "").trim() + ";" + data
     );
   }
 }, 100);
