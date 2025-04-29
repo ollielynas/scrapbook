@@ -754,8 +754,11 @@ function beforePrint() {
     if (!window.book_open) {
       open_book();
     }
-    // document.body.
+    
     let book = document.getElementById("book");
+    let style = document.createElement("style");
+    style.innerHTML = "img {image-rendering: high-quality;image-rendering: optimizequality;}";
+    book.appendChild(style)
     var element = document.getElementById("scrapbook-buttons");
     if (element!==null) {
       element.parentNode.removeChild(element);
@@ -765,7 +768,7 @@ function beforePrint() {
 function afterPrint() {
 
   document.body.onfocus = () => {
-  window.location.reload();
+  // window.location.reload();
 }
 }
 
