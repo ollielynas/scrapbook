@@ -754,6 +754,7 @@ function beforePrint() {
     if (!window.book_open) {
       open_book();
     }
+    // document.body.
     let book = document.getElementById("book");
     var element = document.getElementById("scrapbook-buttons");
     if (element!==null) {
