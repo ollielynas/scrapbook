@@ -46,7 +46,7 @@ html {
       var(--c2);
     background-position-y: bottom;
     background-size: var(--s) var(--s), calc(var(--s)/5) calc(var(--s)/5);
-    font-size: calc( 1vw  );
+    font-size: calc( 0.8vw  );
     overflow: hidden;
 }
 
